@@ -3,12 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faTimes } from '@fortawesome/free-solid-svg-icons';
 
 class TaskForm extends Component {
+  onCloseForm(){
+      this.props.onCloseForm();
+  }
+
   render() {
     return (
         <div className="card border-primary mb-3" style={{maxWidth: '100%'}}>
             <div className="card-header">
             Add task
-            <span className="close"><FontAwesomeIcon icon={faTimes} /></span>                  
+            <span className="close" onClick={() => this.onCloseForm()}><FontAwesomeIcon icon={faTimes} /></span>                  
             </div>
             <div className="card-body text-primary">
                 <form>

@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import TaskItem from './TaskItem';
 class TaskList extends Component {
   render() {
+    var {tasks} = this.props;
+    var taskItemElement = tasks.map((task, index)=>{
+      return <TaskItem key={task.id} index={index+1} task={task}></TaskItem>
+    });
     return (
       <div className="table-responsive">
         <table className="table table-hover">
@@ -14,7 +18,7 @@ class TaskList extends Component {
             </tr>
           </thead>
           <tbody>
-            <TaskItem></TaskItem>
+            {taskItemElement}
           </tbody>
         </table>
     </div>      
