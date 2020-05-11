@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
 import TaskItem from './TaskItem';
 class TaskList extends Component {
+  onUpdateStatus = (task)=> {
+    this.props.onUpdateStatus(task);
+  }
+
+  onDelete = (task)=>{
+    this.props.onDelete(task);
+  }
+
   render() {
     var {tasks} = this.props;
     var taskItemElement = tasks.map((task, index)=>{
-      return <TaskItem key={task.id} index={index+1} task={task}></TaskItem>
+      return <TaskItem 
+                key={task.id} 
+                index={index+1} 
+                task={task} 
+                onUpdateStatus={this.onUpdateStatus}
+                onDelete = {this.onDelete}
+              >
+              </TaskItem>
     });
     return (
       <div className="table-responsive">

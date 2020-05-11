@@ -63,6 +63,39 @@ class App extends Component {
       isDisplayForm: !this.state.isDisplayForm
     });
   }
+
+  onSubmit = (data)=>{
+    var {tasks} = this.state;
+    data.id=this.generateID();
+    tasks.push(data);
+    this.setState({
+      tasks: tasks
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+
+  onUpdateStatus = (task)=> {
+    console.log(task);
+    let tasks = this.state.tasks;
+    let editingTask = tasks.filter(o => o.id===task.id);
+    editingTask[0].status = !editingTask[0].status
+    this.setState({
+      tasks: tasks
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+
+  onDelete = (task)=>{    
+    let {tasks} = this.state;
+    let deletingTask = tasks.filter(o => o.id===task.id);
+    let index = tasks.indexOf(deletingTask[0]);
+    tasks.splice(index, 1);
+    this.setState({
+      tasks: tasks
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    this.onCloseForm();
+  }
   
   render() {
     var {tasks, isDisplayForm} = this.state;
@@ -70,7 +103,7 @@ class App extends Component {
       <div className="container">
           <div className="row">
             <div className={ isDisplayForm ? 'col-xs-4 col-sm-4 col-md-4 col-lg-4' : '' }>              
-              {!isDisplayForm ?'' : <TaskForm onCloseForm={() => this.onCloseForm()}/>}
+              {!isDisplayForm ?'' : <TaskForm onCloseForm={() => this.onCloseForm()} onSubmit={this.onSubmit}/>}
             </div>
             <div className={ isDisplayForm ? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12' }>
               <div className="card border-primary mb-3" style={{maxWidth: '100%'}}>
@@ -85,7 +118,12 @@ class App extends Component {
                         Generate
                       </button> */}
                       <Control></Control>
-                      <TaskList tasks={tasks}></TaskList>
+                      <TaskList 
+                        tasks={tasks} 
+                        onUpdateStatus={this.onUpdateStatus}
+                        onDelete = {this.onDelete}
+                        >                        
+                      </TaskList>
                   </div>
                 </div>
             </div>
