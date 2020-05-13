@@ -14,6 +14,10 @@ class App extends Component {
       filters: {
         name: '',
         status: -1
+      },
+      sort:{
+        sortBy:'name',
+        sortDirection:'ASC'
       }
     }    
   }
@@ -144,9 +148,19 @@ class App extends Component {
        filters: filters
      });
   }
+
+  onSort = (sortBy, sortDirection)=>{
+    let sort = {
+      sortBy, sortDirection
+    }
+    this.setState({sort});
+  }
   
   render() {
-    var {tasks, isDisplayForm, filters } = this.state;    
+    //get state varible
+    var {tasks, isDisplayForm, filters, sort} = this.state;    
+    
+    //filter
     if (filters.name !== ''){
       tasks = tasks.filter(o => o.name.toLowerCase().indexOf(filters.name.toLowerCase()) !== -1);
     }
@@ -154,6 +168,18 @@ class App extends Component {
       let _status = parseInt(filters.status) === 1 ? true : false;
       tasks = tasks.filter(o => o.status === _status);
     }
+
+    //sort
+    tasks = tasks.sort(function(a,b){
+      if (sort.sortDirection === 'ASC'){
+        return a[sort.sortBy] > b[sort.sortBy] ? 1: -1;
+      }
+      else {
+        return a[sort.sortBy] < b[sort.sortBy] ? 1: -1;
+      }
+    });
+
+    //return
     return (
       <div className="container">
           <div className="row">
@@ -179,7 +205,7 @@ class App extends Component {
                         <FontAwesomeIcon icon={faPlus} /> 
                         Generate
                       </button> */}
-                      <Control></Control>
+                      <Control onSort={this.onSort}></Control>
                       <TaskList 
                         tasks={tasks} 
                         onUpdateStatus={this.onUpdateStatus}
