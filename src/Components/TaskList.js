@@ -4,8 +4,8 @@ class TaskList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterName: '',
-      filterStatus: -1
+      name: '',
+      status: -1
     }
   }
 
@@ -27,10 +27,11 @@ class TaskList extends Component {
     this.setState({
       [name]: value
     });
-    this.props.onFilter(
-      name==="filterName"?value: this.state.filterName,
-      name==="filterStatus"? value : this.state.filterStatus
-    );
+    let filters = {
+      name: name==='name'?value: this.state.name,
+      status: name==='status'?value: this.state.status,
+    };
+    this.props.onFilter(filters);
   }
 
   render() {
@@ -64,17 +65,17 @@ class TaskList extends Component {
                   <input
                       type="text"
                       className="form-control"
-                      name="filterName"
+                      name="name"
                       onChange={ this.onChange }
-                      value={ this.state.filerName }
+                      value={ this.state.name }
                   />
               </td>
               <td>
                   <select
                       className="form-control"
-                      name="filterStatus"
+                      name="status"
                       onChange={ this.onChange }
-                      value={ this.state.filerName }
+                      value={ this.state.status }
                   >
                       <option value={-1}>All</option>
                       <option value={0}>Deactive</option>

@@ -139,25 +139,20 @@ class App extends Component {
     this.onOPenForm();
   }
 
-  onFilter = (filterName, filterStatus)=>{
-    this.setState({
-      filters : {
-        name: filterName.toLowerCase(),
-        status: parseInt(filterStatus)
-      }
-    });
+  onFilter = (filters)=>{
+     this.setState({
+       filters: filters
+     });
   }
   
   render() {
     var {tasks, isDisplayForm, filters } = this.state;    
-    if (filters){
-      if (filters.name !== ''){
-        tasks = tasks.filter(o => o.name.toLowerCase().indexOf(filters.name) !== -1);
-      }
-      if (filters.status !== -1){
-        let _status = filters.status === 1 ? true : false;
-        tasks = tasks.filter(o => o.status === _status);
-      }
+    if (filters.name !== ''){
+      tasks = tasks.filter(o => o.name.toLowerCase().indexOf(filters.name.toLowerCase()) !== -1);
+    }
+    if (parseInt(filters.status) !== -1){
+      let _status = parseInt(filters.status) === 1 ? true : false;
+      tasks = tasks.filter(o => o.status === _status);
     }
     return (
       <div className="container">
