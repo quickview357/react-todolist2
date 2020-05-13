@@ -113,9 +113,25 @@ class App extends Component {
   }
 
   onEdit=(task) => {
-    let taskEditings = this.state.tasks.filter(o => o.id===task.id);
-    let taskEditing=taskEditings[0];
-    this.setState({task, taskEditing})
+    this.setState({
+      task //like ES5 {taks: task}
+    });
+    this.onOPenForm();
+  }
+
+  onAdd=(e) => {    
+    //create new task
+    let task = {
+      id:'',
+      name: '',
+      status: false
+    };
+    //set new task to sate
+    this.setState({
+      task: task
+    });
+    //or new way to write: 
+    //this.setState({task})
     this.onOPenForm();
   }
   
@@ -130,7 +146,7 @@ class App extends Component {
                                         onCloseForm={() => this.onCloseForm()} 
                                         onSubmit={this.onSubmit}
                                         onEdit={this.onEdit}
-                                        task={this.state.taskEditing}
+                                        task={this.state.task}
                                       />
               }
             </div>
@@ -141,7 +157,7 @@ class App extends Component {
                     <span className="close"><FontAwesomeIcon icon={faTimes} /></span>                  
                   </div>
                   <div className="card-body text-primary">
-                      <button type="button" className="btn btn-primary mb-2" onClick={()=> this.onToggleForm()}><FontAwesomeIcon icon={faPlus} /> Add Task</button>
+                      <button type="button" className="btn btn-primary mb-2" onClick={this.onAdd}><FontAwesomeIcon icon={faPlus} /> Add Task</button>
                       {/* <button type="button" className="btn btn-success mb-2" onClick={() => this.onGenerateData()}>
                         <FontAwesomeIcon icon={faPlus} /> 
                         Generate
