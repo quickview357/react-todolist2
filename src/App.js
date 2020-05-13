@@ -60,14 +60,29 @@ class App extends Component {
   
   onCloseForm(){
     this.setState({
-      isDisplayForm: !this.state.isDisplayForm
+      isDisplayForm: false
+    });
+  }
+
+  onOPenForm(){
+    this.setState({
+      isDisplayForm: true
     });
   }
 
   onSubmit = (data)=>{
     var {tasks} = this.state;
-    data.id=this.generateID();
-    tasks.push(data);
+    if (data.id===''){
+      data.id=this.generateID();
+      tasks.push(data);
+    }
+    else{
+      let x = tasks.filter(o=>o.id===data.id);
+      if (x.length > 0){
+        x[0].name=data.name;
+        x[0].status=data.status;
+      }
+    }
     this.setState({
       tasks: tasks
     });
@@ -96,6 +111,13 @@ class App extends Component {
     localStorage.setItem('tasks', JSON.stringify(tasks));
     this.onCloseForm();
   }
+
+  onEdit=(task) => {
+    let taskEditings = this.state.tasks.filter(o => o.id===task.id);
+    let taskEditing=taskEditings[0];
+    this.setState({task, taskEditing})
+    this.onOPenForm();
+  }
   
   render() {
     var {tasks, isDisplayForm} = this.state;
@@ -103,7 +125,14 @@ class App extends Component {
       <div className="container">
           <div className="row">
             <div className={ isDisplayForm ? 'col-xs-4 col-sm-4 col-md-4 col-lg-4' : '' }>              
-              {!isDisplayForm ?'' : <TaskForm onCloseForm={() => this.onCloseForm()} onSubmit={this.onSubmit}/>}
+              {
+                !isDisplayForm ?'' : <TaskForm 
+                                        onCloseForm={() => this.onCloseForm()} 
+                                        onSubmit={this.onSubmit}
+                                        onEdit={this.onEdit}
+                                        task={this.state.taskEditing}
+                                      />
+              }
             </div>
             <div className={ isDisplayForm ? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12' }>
               <div className="card border-primary mb-3" style={{maxWidth: '100%'}}>
@@ -122,6 +151,7 @@ class App extends Component {
                         tasks={tasks} 
                         onUpdateStatus={this.onUpdateStatus}
                         onDelete = {this.onDelete}
+                        onEdit={this.onEdit}
                         >                        
                       </TaskList>
                   </div>

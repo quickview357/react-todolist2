@@ -9,6 +9,10 @@ class TaskList extends Component {
     this.props.onDelete(task);
   }
 
+  onEdit=(task) => {
+    this.props.onEdit(task);
+  }
+
   render() {
     var {tasks} = this.props;
     var taskItemElement = tasks.map((task, index)=>{
@@ -18,6 +22,7 @@ class TaskList extends Component {
                 task={task} 
                 onUpdateStatus={this.onUpdateStatus}
                 onDelete = {this.onDelete}
+                onEdit = {this.onEdit}
               >
               </TaskItem>
     });

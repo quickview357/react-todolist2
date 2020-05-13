@@ -6,10 +6,31 @@ class TaskForm extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          name: '',
-          status: false
-      }
+        id:'',
+        name: '',
+        status: false
+      }      
   }
+
+  componentDidMount(){
+      this.setState({
+        id:this.props.task.id,
+        name: this.props.task.name,
+        status: this.props.task.status
+      });
+  }
+
+  componentDidUpdate(prevProps){
+    if (prevProps.task.id !== this.props.task.id){
+        this.setState({
+            id:this.props.task.id,
+            name: this.props.task.name,
+            status: this.props.task.status
+        });
+    }    
+  }
+
+  
   
   onHandleChange = (event)=>{
     const target = event.target;
