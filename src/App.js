@@ -4,6 +4,9 @@ import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import TaskForm from './Components/TaskForm';
 import Control from './Components/Control';
 import TaskList from './Components/TaskList';
+import './Components/UsingRedux';
+import './Demo';
+
 class App extends Component {
   constructor(props) {
     super(props);
