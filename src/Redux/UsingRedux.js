@@ -1,4 +1,19 @@
 import { createStore } from 'redux';
+import * as actions from './Actions/Index'
+import myReducer from './Reducers/Index';
+
+const store = createStore(myReducer);
+console.log(store.getState());
+store.dispatch(actions.status());
+store.dispatch(actions.sort({
+    by: 'Name',
+    direction: 'DESC'
+}));
+console.log(store.getState());
+
+
+/*
+import { createStore } from 'redux';
 let initialState = {
     status: false,
     sort: {
@@ -36,8 +51,10 @@ const sortAction = {
 };
 
 console.log(store.getState());
-//store.dispatch(toogleAction);
+store.dispatch(toogleAction);
 store.dispatch(sortAction);
 console.log(store.getState());
+
+*/
 
 
