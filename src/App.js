@@ -211,7 +211,6 @@ class App extends Component {
                       </button> */}
                       <Control onSort={this.onSort}></Control>
                       <TaskList 
-                        tasks={tasks} 
                         onUpdateStatus={this.onUpdateStatus}
                         onDelete = {this.onDelete}
                         onEdit={this.onEdit}
